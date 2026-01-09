@@ -13,8 +13,8 @@
 
 # API redirects (must come BEFORE catch-all)
 [[redirects]]
-  from = "/api/gemini/:model/:action"
-  to = "/.netlify/functions/gemini-proxy?model=:model&action=:action"
+  from = "/api/gemini/*"
+  to = "/.netlify/functions/gemini-proxy"
   status = 200
   force = true
 

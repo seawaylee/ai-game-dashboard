@@ -20,6 +20,13 @@ git push
 | `API_KEY` | `sk-s1K4y2PE60DSlBQtZcLgvncSrAipZDzSnEejomeNlFR0u5S4` |
 | `TARGET_BASE_URL` | `https://api.34ku.com` |
 
+> [!CRITICAL]
+> **环境变量设置后，必须手动触发重新部署！**
+> 
+> 在 Netlify Dashboard → Deploys → **Trigger deploy** → **Clear cache and deploy site**
+> 
+> 环境变量不会自动应用到已部署的站点。
+
 ⚠️ **重要**：
 - 这些值**必须**设置在 Netlify Dashboard 中
 - **不要**将实际的 API Key 提交到 Git

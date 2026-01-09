@@ -11,19 +11,53 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        // Parse path parameters from URL
-        // URL format: /.netlify/functions/gemini-proxy?model=xxx&action=yyy
+        // Parse model and action from path
+        // When /api/gemini/{model}/{action} is redirected to this function,
+        // the original path is preserved in event.path or event.rawUrl
+
+        let model, action = 'generateContent';
+
+        // Try query params first (direct function call for testing)
         const params = event.queryStringParameters || {};
-        const model = params.model;
-        const action = params.action || 'generateContent';
+        if (params.model) {
+            model = params.model;
+            action = params.action || action;
+        }
+
+        // Extract from path (main production path)
+        if (!model && event.path) {
+            // event.path might be "/.netlify/functions/gemini-proxy"
+            // but we need to check rawUrl or headers
+            const pathMatch = event.path.match(/\/api\/gemini\/([^\/]+)\/([^\/\?]+)/);
+            if (pathMatch) {
+                model = pathMatch[1];
+                action = pathMatch[2];
+            }
+        }
+
+        // Fallback: check rawUrl
+        if (!model && event.rawUrl) {
+            const urlMatch = event.rawUrl.match(/\/api\/gemini\/([^\/]+)\/([^\/\?]+)/);
+            if (urlMatch) {
+                model = urlMatch[1];
+                action = urlMatch[2];
+            }
+        }
 
         if (!model) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: 'Missing model parameter' })
+                body: JSON.stringify({
+                    error: 'Missing model parameter',
+                    debug: {
+                        path: event.path,
+                        rawUrl: event.rawUrl,
+                        params: event.queryStringParameters,
+                        headers: Object.keys(event.headers || {})
+                    }
+                })
             };
         }
-
         // Get credentials from environment
         const API_KEY = process.env.API_KEY;
         const TARGET_BASE_URL = process.env.TARGET_BASE_URL || 'https://api.34ku.com';
