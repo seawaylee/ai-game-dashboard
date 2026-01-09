@@ -1,0 +1,26 @@
+{
+    "name": "ai-game-dashboard",
+    "version": "1.0.0",
+    "description": "AI Game Dashboard - A unified platform to access multiple AI-powered games",
+    "type": "module",
+    "scripts": {
+        "dev": "npx -y concurrently -n \"Dashboard,五子棋,马里奥\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run serve\" \"npm run dev:wuziqi\" \"npm run dev:mario\"",
+        "serve": "npx -y http-server -p 8080 -o",
+        "dev:wuziqi": "cd aistudio-wuziqi && npm run dev",
+        "dev:mario": "cd minecraft-mario && npm run dev",
+        "install:all": "npm run install:wuziqi && npm run install:mario",
+        "install:wuziqi": "cd aistudio-wuziqi && npm install",
+        "install:mario": "cd minecraft-mario && npm install",
+        "setup": "npm run install:all && echo 'Setup complete! Run npm run dev to start the dashboard.'"
+    },
+    "keywords": [
+        "game",
+        "dashboard",
+        "ai",
+        "minecraft",
+        "gomoku",
+        "mario"
+    ],
+    "author": "AI Game Studio",
+    "license": "MIT"
+}

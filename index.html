@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI游戏平台 - 体验多种创新AI驱动的互动游戏">
+    <title>AI游戏中心 | Game Dashboard</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎮 AI游戏中心</h1>
+            <p>探索精彩的AI驱动游戏世界，享受创新互动体验</p>
+        </header>
+
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- Game 1: MineGomoku -->
+            <div class="game-card" onclick="launchGame('aistudio-wuziqi')">
+                <div class="card-content">
+                    <img src="assets/gomoku.png" alt="MineGomoku" class="game-icon">
+                    <h2 class="game-title">我的世界 - 五子棋</h2>
+                    <p class="game-description">
+                        Minecraft主题的五子棋游戏，支持单人AI对战、本地多人对战，自定义方块样式，复古像素美学。
+                    </p>
+                    <span class="game-status status-ready">✓ 可以游玩</span>
+                </div>
+            </div>
+
+            <!-- Game 2: Minecraft Mario -->
+            <div class="game-card" onclick="launchGame('minecraft-mario')">
+                <div class="card-content">
+                    <img src="assets/mario.png" alt="Minecraft Mario" class="game-icon">
+                    <h2 class="game-title">我的世界 - 马里奥</h2>
+                    <p class="game-description">
+                        以我的世界为主题的马里奥风格平台游戏，具有通过Gemini AI生成关卡、自定义角色选择和复古合成音频。
+                    </p>
+                    <span class="game-status status-ready">✓ 可以游玩</span>
+                </div>
+            </div>
+
+            <!-- Game 3: AI Studio Calc (Coming Soon) -->
+            <div class="game-card coming-soon">
+                <div class="card-content">
+                    <img src="assets/calc.png" alt="AI Studio Calc" class="game-icon">
+                    <h2 class="game-title">AI计算挑战</h2>
+                    <p class="game-description">
+                        趣味数学计算游戏，通过精彩的关卡挑战提升你的算术能力，享受数字的乐趣。
+                    </p>
+                    <span class="game-status status-coming-soon">即将推出</span>
+                </div>
+            </div>
+
+            <!-- Game 4: UltraMath (Coming Soon) -->
+            <div class="game-card coming-soon">
+                <div class="card-content">
+                    <img src="assets/ultramath.png" alt="UltraMath" class="game-icon">
+                    <h2 class="game-title">终极数学</h2>
+                    <p class="game-description">
+                        高级数学谜题游戏，融合几何、代数和逻辑推理，挑战你的数学极限，探索数学之美。
+                    </p>
+                    <span class="game-status status-coming-soon">即将推出</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 AI游戏中心 | 由AI技术驱动</p>
+        </footer>
+    </div>
+
+    <script>
+        // Game configuration with their dev server URLs
+        const gameConfig = {
+            'aistudio-wuziqi': {
+                url: 'http://localhost:5173',
+                name: '我的世界 - 五子棋',
+                command: 'npm run dev:wuziqi'
+            },
+            'minecraft-mario': {
+                url: 'http://localhost:5174',
+                name: '我的世界 - 马里奥',
+                command: 'npm run dev:mario'
+            }
+        };
+
+        function launchGame(gameName) {
+            const gameCard = event.currentTarget;
+
+            // Check if game is coming soon
+            if (gameCard.classList.contains('coming-soon')) {
+                alert('该游戏即将推出，敬请期待！');
+                return;
+            }
+
+            const config = gameConfig[gameName];
+            if (!config) {
+                alert('游戏配置错误');
+                return;
+            }
+
+            // Add loading animation
+            gameCard.classList.add('loading');
+
+            // Check if the Vite dev server is running
+            fetch(config.url)
+                .then(response => {
+                    // Server is running, open game in new window
+                    window.open(config.url, '_blank');
+                    gameCard.classList.remove('loading');
+                })
+                .catch(error => {
+                    // Server is not running, show instructions
+                    gameCard.classList.remove('loading');
+                    const instructions = `请先启动 ${config.name} 的开发服务器！\n\n在新的终端窗口中运行：\n${config.command}\n\n然后再点击此卡片启动游戏。`;
+
+                    alert(instructions);
+                });
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Could be used for navigation back from games
+            }
+        });
+
+        // Add subtle parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.game-card');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            cards.forEach((card, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+
+                if (!card.classList.contains('coming-soon')) {
+                    card.style.transform = `translate(${x}px, ${y}px)`;
+                }
+            });
+        });
+
+        // Reset transform on mouse leave
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.game-card');
+            cards.forEach(card => {
+                card.style.transform = '';
+            });
+        });
+
+        // Show startup instructions on page load
+        window.addEventListener('load', () => {
+            const hasSeenInstructions = sessionStorage.getItem('hasSeenGameInstructions');
+            if (!hasSeenInstructions) {
+                setTimeout(() => {
+                    const message = `🎮 欢迎来到AI游戏中心！\n\n要游玩游戏，请先在新终端中启动游戏服务器：\n\n• 五子棋: npm run dev:wuziqi\n• 马里奥: npm run dev:mario\n\n启动后，点击游戏卡片即可在新窗口中打开游戏。\n\n点击"确定"不再显示此提示`;
+
+                    if (confirm(message)) {
+                        sessionStorage.setItem('hasSeenGameInstructions', 'true');
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>
