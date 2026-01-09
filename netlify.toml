@@ -1,8 +1,32 @@
 [build]
-  command = "npm run build"
+  # Build command for all sub-projects
+  command = "npm run install:all && npm run build"
+  
+  # Publish directory (root dist)
   publish = "dist"
+  
+  # Functions directory
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
 
 [[redirects]]
+  # Redirect all API calls to functions
+  from = "/api/gemini/*"
+  to = "/.netlify/functions/gemini-proxy?model=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  # TTS endpoint
+  from = "/api/openai/speech"
+  to = "/.netlify/functions/tts-proxy"
+  status = 200
+  force = true
+
+[[redirects]]
+  # SPA fallback for sub-apps
   from = "/*"
   to = "/index.html"
   status = 200

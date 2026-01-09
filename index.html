@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI游戏平台 - 体验多种创新AI驱动的互动游戏">
     <title>AI游戏中心 | Game Dashboard</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="index.css">
 </head>
 
@@ -66,6 +67,19 @@
                     <span class="game-status status-ready">✓ 可以游玩</span>
                 </div>
             </div>
+
+            <!-- Game 5: LingoCard -->
+            <div class="game-card" onclick="launchGame('lingocard-genai')">
+                <div class="card-content">
+                    <img src="assets/lingocard.png" alt="LingoCard" class="game-icon">
+                    <h2 class="game-title">单词卡生成器</h2>
+                    <p class="game-description">
+                        AI驱动的词汇卡片生成器，根据主题创建可视化场景、词汇表和例句，让英语学习更直观有趣。
+                    </p>
+                    <span class="game-status status-ready">✓ 可以游玩</span>
+                </div>
+            </div>
+
         </div>
 
         <!-- Footer -->
@@ -99,6 +113,11 @@
                 url: isLocal ? 'http://localhost:5176' : 'ultramath/',
                 name: '奥特数学',
                 command: 'npm run dev:ultramath'
+            },
+            'lingocard-genai': {
+                url: isLocal ? 'http://localhost:5177' : 'lingocard-genai/',
+                name: '单词卡生成器',
+                command: 'npm run dev:lingocard'
             }
         };
 
