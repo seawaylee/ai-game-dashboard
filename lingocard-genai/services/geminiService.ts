@@ -11,11 +11,11 @@ const BACKEND_URL = import.meta.env.DEV
 
 // Call Gemini API via Backend Proxy
 async function callGeminiApi(model: string, data: any) {
-  // In production, Netlify redirects /api/gemini/* to functions
+  // In production, use path-based routing: /api/gemini/{model}/{action}
   // In local dev, directly call Express endpoint
   const url = import.meta.env.DEV
     ? `${BACKEND_URL}/api/gemini/${model}/generateContent`
-    : `/api/gemini/${model}?action=generateContent`;
+    : `/api/gemini/${model}/generateContent`;
 
   const response = await fetch(url, {
     method: 'POST',
