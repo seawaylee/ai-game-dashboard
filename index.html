@@ -43,27 +43,27 @@
                 </div>
             </div>
 
-            <!-- Game 3: AI Studio Calc (Coming Soon) -->
-            <div class="game-card coming-soon">
+            <!-- Game 3: AI Studio Calc -->
+            <div class="game-card" onclick="launchGame('aistudio-calc')">
                 <div class="card-content">
                     <img src="assets/calc.png" alt="AI Studio Calc" class="game-icon">
                     <h2 class="game-title">AI计算挑战</h2>
                     <p class="game-description">
                         趣味数学计算游戏，通过精彩的关卡挑战提升你的算术能力，享受数字的乐趣。
                     </p>
-                    <span class="game-status status-coming-soon">即将推出</span>
+                    <span class="game-status status-ready">✓ 可以游玩</span>
                 </div>
             </div>
 
-            <!-- Game 4: UltraMath (Coming Soon) -->
-            <div class="game-card coming-soon">
+            <!-- Game 4: UltraMath -->
+            <div class="game-card" onclick="launchGame('ultramath')">
                 <div class="card-content">
                     <img src="assets/ultramath.png" alt="UltraMath" class="game-icon">
                     <h2 class="game-title">终极数学</h2>
                     <p class="game-description">
                         高级数学谜题游戏，融合几何、代数和逻辑推理，挑战你的数学极限，探索数学之美。
                     </p>
-                    <span class="game-status status-coming-soon">即将推出</span>
+                    <span class="game-status status-ready">✓ 可以游玩</span>
                 </div>
             </div>
         </div>
@@ -86,6 +86,16 @@
                 url: 'http://localhost:5174',
                 name: '我的世界 - 马里奥',
                 command: 'npm run dev:mario'
+            },
+            'aistudio-calc': {
+                url: 'http://localhost:5175',
+                name: 'AI计算挑战',
+                command: 'npm run dev:calc'
+            },
+            'ultramath': {
+                url: 'http://localhost:5176',
+                name: '终极数学',
+                command: 'npm run dev:ultramath'
             }
         };
 
@@ -160,7 +170,7 @@
             const hasSeenInstructions = sessionStorage.getItem('hasSeenGameInstructions');
             if (!hasSeenInstructions) {
                 setTimeout(() => {
-                    const message = `🎮 欢迎来到AI游戏中心！\n\n要游玩游戏，请先在新终端中启动游戏服务器：\n\n• 五子棋: npm run dev:wuziqi\n• 马里奥: npm run dev:mario\n\n启动后，点击游戏卡片即可在新窗口中打开游戏。\n\n点击"确定"不再显示此提示`;
+                    const message = `🎮 欢迎来到AI游戏中心！\n\n只需一个命令启动所有游戏：\n\nnpm run dev\n\n这会同时启动：\n• Dashboard (主界面)\n• 五子棋\n• 马里奥\n• AI计算挑战\n• 终极数学\n\n启动后，点击游戏卡片即可在新窗口中打开游戏。\n\n点击"确定"不再显示此提示`;
 
                     if (confirm(message)) {
                         sessionStorage.setItem('hasSeenGameInstructions', 'true');

@@ -4,13 +4,17 @@
     "description": "AI Game Dashboard - A unified platform to access multiple AI-powered games",
     "type": "module",
     "scripts": {
-        "dev": "npx -y concurrently -n \"Dashboard,五子棋,马里奥\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run serve\" \"npm run dev:wuziqi\" \"npm run dev:mario\"",
+        "dev": "npx -y concurrently -n \"Dashboard,五子棋,马里奥,AI计算,终极数学\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgYellow.bold,bgCyan.bold\" \"npm run serve\" \"npm run dev:wuziqi\" \"npm run dev:mario\" \"npm run dev:calc\" \"npm run dev:ultramath\"",
         "serve": "npx -y http-server -p 8080 -o",
         "dev:wuziqi": "cd aistudio-wuziqi && npm run dev",
         "dev:mario": "cd minecraft-mario && npm run dev",
-        "install:all": "npm run install:wuziqi && npm run install:mario",
+        "dev:calc": "cd aistudio-calc && npm run dev",
+        "dev:ultramath": "cd ultramath && npm run dev",
+        "install:all": "npm run install:wuziqi && npm run install:mario && npm run install:calc && npm run install:ultramath",
         "install:wuziqi": "cd aistudio-wuziqi && npm install",
         "install:mario": "cd minecraft-mario && npm install",
+        "install:calc": "cd aistudio-calc && npm install",
+        "install:ultramath": "cd ultramath && npm install",
         "setup": "npm run install:all && echo 'Setup complete! Run npm run dev to start the dashboard.'"
     },
     "keywords": [
