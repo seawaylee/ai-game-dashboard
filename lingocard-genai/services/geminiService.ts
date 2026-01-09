@@ -2,9 +2,8 @@
 import { GoogleGenAI, Type, Schema, Modality } from "@google/genai";
 import { DifficultyLevel, LessonContent, Vocabulary, ModelType } from "../types";
 
-// Base64 encoded API key (light obfuscation)
-const ENCODED_KEY = 'c2stczFLNHkyUEU2MERTbEJRdFpjTGd2bmNTckFpcERselNuRWVqb21lTmxGUjB1NVM0';
-const API_KEY = atob(ENCODED_KEY);
+// Direct API key (as requested)
+const API_KEY = 'sk-s1K4y2PE60DSlBQtZcLgvncSrAipZDzSnEejomeNlFR0u5S4';
 const BASE_URL = 'https://api.34ku.com';
 
 // Direct API call to Gemini
