@@ -15,6 +15,11 @@
         "install:mario": "cd minecraft-mario && npm install",
         "install:calc": "cd aistudio-calc && npm install",
         "install:ultramath": "cd ultramath && npm install",
+        "build:wuziqi": "cd aistudio-wuziqi && npm run build",
+        "build:mario": "cd minecraft-mario && npm run build",
+        "build:calc": "cd aistudio-calc && npm run build",
+        "build:ultramath": "cd ultramath && npm run build",
+        "build": "mkdir -p dist && cp index.html dist/ && cp index.css dist/ && cp -r assets dist/ && npm run install:all && npm run build:wuziqi && npm run build:mario && npm run build:calc && npm run build:ultramath && mkdir -p dist/aistudio-wuziqi && cp -r aistudio-wuziqi/dist/* dist/aistudio-wuziqi/ && mkdir -p dist/minecraft-mario && cp -r minecraft-mario/dist/* dist/minecraft-mario/ && mkdir -p dist/aistudio-calc && cp -r aistudio-calc/dist/* dist/aistudio-calc/ && mkdir -p dist/ultramath && cp -r ultramath/dist/* dist/ultramath/",
         "setup": "npm run install:all && echo 'Setup complete! Run npm run dev to start the dashboard.'"
     },
     "keywords": [

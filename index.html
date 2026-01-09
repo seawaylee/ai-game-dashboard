@@ -76,24 +76,27 @@
 
     <script>
         // Game configuration with their dev server URLs
+        // Game configuration
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
         const gameConfig = {
             'aistudio-wuziqi': {
-                url: 'http://localhost:5173',
+                url: isLocal ? 'http://localhost:5173' : 'aistudio-wuziqi/',
                 name: '我的世界 - 五子棋',
                 command: 'npm run dev:wuziqi'
             },
             'minecraft-mario': {
-                url: 'http://localhost:5174',
+                url: isLocal ? 'http://localhost:5174' : 'minecraft-mario/',
                 name: '我的世界 - 马里奥',
                 command: 'npm run dev:mario'
             },
             'aistudio-calc': {
-                url: 'http://localhost:5175',
+                url: isLocal ? 'http://localhost:5175' : 'aistudio-calc/',
                 name: '奥特计算器',
                 command: 'npm run dev:calc'
             },
             'ultramath': {
-                url: 'http://localhost:5176',
+                url: isLocal ? 'http://localhost:5176' : 'ultramath/',
                 name: '奥特数学',
                 command: 'npm run dev:ultramath'
             }
