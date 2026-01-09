@@ -1,0 +1,14 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad-佐菲" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A91B1B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#grad-佐菲)" stroke="white" stroke-width="2" />
+  <text x="50" y="50" font-family="'Microsoft YaHei', Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle" dy=".3em" style="text-shadow: 1px 1px 2px black;">
+    佐菲
+  </text>
+  <!-- Glossy effect -->
+  <ellipse cx="50" cy="20" rx="30" ry="15" fill="white" fill-opacity="0.2" />
+</svg>

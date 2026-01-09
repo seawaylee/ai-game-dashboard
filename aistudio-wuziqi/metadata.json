@@ -1,0 +1,5 @@
+{
+  "name": "MineGomoku - Craft Edition",
+  "description": "A Minecraft-themed Gomoku (Five-in-a-Row) game featuring single-player AI, local multiplayer, custom block styles, and retro aesthetics.",
+  "requestFramePermissions": []
+}

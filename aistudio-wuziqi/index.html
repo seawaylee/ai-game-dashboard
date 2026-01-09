@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MineGomoku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'pixel': ['"VT323"', 'monospace'],
+            },
+            colors: {
+              mc: {
+                grass: '#5D9C45',
+                dirt: '#6D4C34',
+                stone: '#7D7D7D',
+                wood: '#855E42',
+                diamond: '#4EEFDC',
+                gold: '#FDF55F',
+                iron: '#E5E5E5',
+                redstone: '#FF0000',
+                obsidian: '#140D1D',
+                sky: '#C6E7FF'
+              }
+            },
+            boxShadow: {
+              'pixel': 'inset -4px -4px 0px 0px rgba(0,0,0,0.3), inset 4px 4px 0px 0px rgba(255,255,255,0.3)',
+              'pixel-pressed': 'inset 4px 4px 0px 0px rgba(0,0,0,0.3)',
+              'block': 'inset -4px -4px 0px 0px rgba(0,0,0,0.5), inset 4px 4px 0px 0px rgba(255,255,255,0.2)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        image-rendering: pixelated;
+        background-color: #2e2e2e;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="./index.tsx"></script>
+</body>
+</html>
