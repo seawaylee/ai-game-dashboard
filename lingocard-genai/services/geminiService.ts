@@ -2,64 +2,28 @@
 import { GoogleGenAI, Type, Schema, Modality } from "@google/genai";
 import { DifficultyLevel, LessonContent, Vocabulary, ModelType } from "../types";
 
-// Initialize the backend URL with environment detection
-// Local dev: use Express server on port 3001
-// Production (Netlify): use serverless functions
-const BACKEND_URL = import.meta.env.DEV
-  ? 'http://localhost:3001'
-  : '';  // Empty string uses same origin (Netlify Functions via redirects)
+// Base64 encoded API key (light obfuscation)
+const ENCODED_KEY = 'c2stczFLNHkyUEU2MERTbEJRdFpjTGd2bmNTckFpcERselNuRWVqb21lTmxGUjB1NVM0';
+const API_KEY = atob(ENCODED_KEY);
+const BASE_URL = 'https://api.34ku.com';
 
-// Call Gemini API via Backend Proxy
+// Direct API call to Gemini
 async function callGeminiApi(model: string, data: any) {
-  // In production, use path-based routing: /api/gemini/{model}/{action}
-  // In local dev, directly call Express endpoint
-  const url = import.meta.env.DEV
-    ? `${BACKEND_URL}/api/gemini/${model}/generateContent`
-    : `/api/gemini/${model}/generateContent`;
+  const url = `${BASE_URL}/v1beta/models/${model}:generateContent?key=${API_KEY}`;
 
   const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     console.error("API Error Details:", errorData);
-    throw new Error(`API Error: ${response.status} ${response.statusText} - ${errorData?.error?.message || 'Unknown error'}`);
+    throw new Error(`API Error: ${response.status} ${response.statusText}`);
   }
 
   return await response.json();
-}
-
-// Call OpenAI TTS via Backend Proxy
-async function callOpenAITTS(text: string) {
-  const url = import.meta.env.DEV
-    ? `${BACKEND_URL}/api/openai/speech`
-    : '/api/openai/speech';
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // No Authorization header needed here, handled by backend
-    },
-    body: JSON.stringify({
-      model: 'tts-1-1106',
-      input: text,
-      voice: 'alloy'
-    })
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    console.error("TTS API Error Details:", errorData);
-    throw new Error(`TTS API Error: ${response.status} ${response.statusText}`);
-  }
-
-  return await response.arrayBuffer();
 }
 
 // Model Configuration Map
