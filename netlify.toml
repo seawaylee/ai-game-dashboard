@@ -11,22 +11,47 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# API redirects (must come BEFORE catch-all)
 [[redirects]]
-  # Redirect all API calls to functions
   from = "/api/gemini/*"
   to = "/.netlify/functions/gemini-proxy?model=:splat"
   status = 200
   force = true
 
 [[redirects]]
-  # TTS endpoint
   from = "/api/openai/speech"
   to = "/.netlify/functions/tts-proxy"
   status = 200
   force = true
 
+# Sub-app SPA fallbacks (specific routes first)
 [[redirects]]
-  # SPA fallback for sub-apps
+  from = "/lingocard-genai/*"
+  to = "/lingocard-genai/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/aistudio-wuziqi/*"
+  to = "/aistudio-wuziqi/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/minecraft-mario/*"
+  to = "/minecraft-mario/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/aistudio-calc/*"
+  to = "/aistudio-calc/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ultramath/*"
+  to = "/ultramath/index.html"
+  status = 200
+
+# Main dashboard fallback (last resort)
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
