@@ -55,7 +55,7 @@ export default function App() {
 
       // Pick a random file from the actual avatar files list
       const randomFileName = AVATAR_FILES[Math.floor(Math.random() * AVATAR_FILES.length)];
-      const localAssetUrl = `/avatars/${randomFileName}`;
+      const localAssetUrl = `avatars/${randomFileName}`;
 
       const pitch = 0.6 + Math.random() * 0.3; // Deeper voice
       newConfigs[key] = {

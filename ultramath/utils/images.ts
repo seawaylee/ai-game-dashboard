@@ -1,7 +1,7 @@
 // 奥特曼图片管理工具
 
 // 图片路径（相对于public目录，Vite会自动处理public目录下的文件）
-const ULTraman_IMAGE_BASE = '/assets/images/ultraman/';
+const ULTraman_IMAGE_BASE = 'assets/images/ultraman/';
 
 // 图片列表（在运行时加载）
 let imageListCache: string[] | null = null;
@@ -14,7 +14,8 @@ async function initImageList(): Promise<string[]> {
 
   try {
     // 尝试从JSON文件加载图片列表
-    const response = await fetch('/assets/images/ultraman-list.json');
+    // Remove leading slash to make it relative to base
+    const response = await fetch('assets/images/ultraman-list.json');
     if (response.ok) {
       const data = await response.json();
       imageListCache = data.images || [];
@@ -31,7 +32,7 @@ async function initImageList(): Promise<string[]> {
     'ultraman_640.jpg',
     'ultraman_640.png',
   ];
-  
+
   return imageListCache;
 }
 
@@ -63,21 +64,21 @@ export async function getRandomUltramanImages(count: number): Promise<string[]> 
   if (images.length === 0) {
     return [`${ULTraman_IMAGE_BASE}ultraman_0.jpg`];
   }
-  
+
   // 如果请求的数量大于可用图片数，允许重复
   const selected: string[] = [];
   const used = new Set<number>();
-  
+
   for (let i = 0; i < count && selected.length < images.length * 2; i++) {
     let randomIndex: number;
     do {
       randomIndex = Math.floor(Math.random() * images.length);
     } while (used.has(randomIndex) && used.size < images.length);
-    
+
     used.add(randomIndex);
     selected.push(`${ULTraman_IMAGE_BASE}${images[randomIndex]}`);
   }
-  
+
   return selected;
 }
 
@@ -85,24 +86,24 @@ export async function getRandomUltramanImages(count: number): Promise<string[]> 
 export function getRandomUltramanImagesSync(count: number): string[] {
   if (!imageListCache || imageListCache.length === 0) {
     const fallback = ['ultraman_0.jpg', 'ultraman_102.jpg', 'ultraman_640.jpg'];
-    return Array.from({ length: count }, () => 
+    return Array.from({ length: count }, () =>
       `${ULTraman_IMAGE_BASE}${fallback[Math.floor(Math.random() * fallback.length)]}`
     );
   }
-  
+
   const selected: string[] = [];
   const used = new Set<number>();
-  
+
   for (let i = 0; i < count && selected.length < imageListCache.length * 2; i++) {
     let randomIndex: number;
     do {
       randomIndex = Math.floor(Math.random() * imageListCache.length);
     } while (used.has(randomIndex) && used.size < imageListCache.length);
-    
+
     used.add(randomIndex);
     selected.push(`${ULTraman_IMAGE_BASE}${imageListCache[randomIndex]}`);
   }
-  
+
   return selected;
 }
 
