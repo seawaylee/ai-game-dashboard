@@ -165,19 +165,7 @@
             });
         });
 
-        // Show startup instructions on page load
-        window.addEventListener('load', () => {
-            const hasSeenInstructions = sessionStorage.getItem('hasSeenGameInstructions');
-            if (!hasSeenInstructions) {
-                setTimeout(() => {
-                    const message = `🎮 欢迎来到AI游戏中心！\n\n只需一个命令启动所有游戏：\n\nnpm run dev\n\n这会同时启动：\n• Dashboard (主界面)\n• 五子棋\n• 马里奥\n• AI计算挑战\n• 终极数学\n\n启动后，点击游戏卡片即可在新窗口中打开游戏。\n\n点击"确定"不再显示此提示`;
 
-                    if (confirm(message)) {
-                        sessionStorage.setItem('hasSeenGameInstructions', 'true');
-                    }
-                }, 1000);
-            }
-        });
     </script>
 </body>
 
