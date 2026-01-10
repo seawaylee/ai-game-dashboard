@@ -159,18 +159,22 @@ export const generateSceneImage = async (
   try {
     const models = getModels(modelType);
 
-    // Lowercase and English+IPA only (Removed Chinese)
-    const vocabList = vocabulary.map(v =>
-      `"${v.word.toLowerCase()}" (IPA: ${v.phonetic})`
-    ).join(', ');
+    // English + IPA + Chinese - WITH ENUMERATION for clarity
+    const vocabList = vocabulary.map((v, idx) =>
+      `${idx + 1}. "${v.word.toLowerCase()}" (IPA: ${v.phonetic}) [CH: ${v.translation}]`
+    ).join('\n    ');
+
+    // Exact word list for strict matching
+    const exactWords = vocabulary.map(v => v.word.toLowerCase()).join('", "');
 
     // Simplified Labeling Style
     const labelingStyle = `
-    - **TEXT CONTENT**: Inside each bubble, write EXACTLY two lines:
+    - **TEXT CONTENT**: Inside each bubble, write EXACTLY three lines:
       1. **${vocabulary[0].word.toLowerCase()}** (The English Word, in LOWERCASE)
       2. **${vocabulary[0].phonetic}** (The IPA Phonetic)
+      3. **${vocabulary[0].translation}** (The Chinese Translation)
     - **CASE**: All English words must be strictly **LOWERCASE** (e.g. "apple", not "Apple").
-    - **ENGLISH/IPA ONLY**: Do NOT include Chinese characters or translations.
+    - **LANGUAGES**: English, IPA, and Simplified Chinese are required.
     `;
 
     // Optimized prompt matching the reference image style
@@ -179,7 +183,14 @@ export const generateSceneImage = async (
     
     Scene Description: ${basePrompt}
     
-    **CRITICAL GOAL**: You MUST illustrate AND LABEL exactly ${vocabulary.length} items: ${vocabList}.
+    **CRITICAL GOAL**: You MUST illustrate AND LABEL exactly ${vocabulary.length} items from this EXACT list:
+    ${vocabList}
+    
+    **STRICT VOCABULARY CONSTRAINTS**:
+    - ONLY label these ${vocabulary.length} words: "${exactWords}"
+    - DO NOT label any other objects in the scene
+    - DO NOT create duplicate labels for the same word
+    - Each word appears EXACTLY ONCE in the image
     
     **ART STYLE (Strict Adherence):**
     - **LIGNE CLAIRE / THICK OUTLINES**: All characters and objects MUST have distinct, consistent BLACK OUTLINES (cartoon vector art style).
@@ -187,8 +198,10 @@ export const generateSceneImage = async (
     
     **LABELING INSTRUCTIONS (HIGHEST PRIORITY):**
     1. **EVERY ITEM MUST BE LABELED**: It is a FAILURE if you draw an object but do not attach a speech bubble to it.
-    2. **ONE LABEL PER ITEM**: Draw exactly one bubble for each of the ${vocabulary.length} words listed above.
-    3. **CLEAR POINTERS**: Every speech bubble MUST have a distinct tail or line pointing DIRECTLY to the correct object.
+    2. **ONE LABEL PER ITEM**: Draw exactly ${vocabulary.length} speech bubbles - one for each word in the list above.
+    3. **NO DUPLICATES**: If a word appears multiple times in the scene (e.g., multiple apples), label only ONE instance.
+    4. **NO EXTRA LABELS**: Do NOT label objects that are not in the vocabulary list (e.g., background items).
+    5. **CLEAR POINTERS**: Every speech bubble MUST have a distinct tail or line pointing DIRECTLY to the correct object.
     
     **LABEL CONTENT**:
     ${labelingStyle}
@@ -196,6 +209,7 @@ export const generateSceneImage = async (
     **LAYOUT**:
     - Distribute the ${vocabulary.length} objects across the scene.
     - DO NOT clutter them or hide them. Ensure there is white space for the speech bubbles.
+    - You may include unlabeled background objects for context, but ONLY label the ${vocabulary.length} vocabulary items.
     `;
 
     // Construct request for image generation
